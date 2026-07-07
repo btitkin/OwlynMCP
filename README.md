@@ -82,7 +82,7 @@ The server runs over MCP stdio transport.
 
 ## MCP Client Configuration
 
-Built from source:
+Generic stdio config:
 
 ```json
 {
@@ -92,6 +92,38 @@ Built from source:
       "args": ["/absolute/path/to/owlyn-mcp/dist/index.js"],
       "env": {
         "OWLYN_DB_PATH": "/absolute/path/to/.owlyn/owlyn.sqlite"
+      }
+    }
+  }
+}
+```
+
+Windows path example:
+
+```json
+{
+  "mcpServers": {
+    "owlyn": {
+      "command": "node",
+      "args": ["C:\\Users\\you\\Projects\\owlyn-mcp\\dist\\index.js"],
+      "env": {
+        "OWLYN_DB_PATH": "C:\\Users\\you\\.owlyn\\owlyn.sqlite"
+      }
+    }
+  }
+}
+```
+
+macOS/Linux path example:
+
+```json
+{
+  "mcpServers": {
+    "owlyn": {
+      "command": "node",
+      "args": ["/Users/you/projects/owlyn-mcp/dist/index.js"],
+      "env": {
+        "OWLYN_DB_PATH": "/Users/you/.owlyn/owlyn.sqlite"
       }
     }
   }
@@ -332,6 +364,40 @@ npm test
 ```
 
 Tests use temporary SQLite database paths and do not write to the user's real `~/.owlyn` directory.
+
+Manual MCP smoke test after building:
+
+```bash
+npm run build
+npm run smoke:mcp
+```
+
+The smoke test uses the official MCP SDK client and calls:
+
+- `owlyn_start`
+- `owlyn_checkpoint`
+- `owlyn_should_continue`
+- `owlyn_plan_next`
+- `owlyn_end`
+
+It uses a temporary SQLite database unless `OWLYN_DB_PATH` is set.
+
+## Troubleshooting
+
+`better-sqlite3` native dependency issues:
+Make sure Node.js and npm are installed normally for your platform. If installation fails, check that your Node version is supported and that your environment can install native npm packages.
+
+Node version requirement:
+Owlyn requires Node.js 20 or newer. Check with `node --version`.
+
+`OWLYN_DB_PATH` usage:
+Set `OWLYN_DB_PATH` when you want Owlyn to store its SQLite database somewhere other than `~/.owlyn/owlyn.sqlite`. The parent directory is created automatically.
+
+No active session found:
+Call `owlyn_start` first, or pass a known `session_id` to tools that support it. Completed or abandoned sessions are not treated as the latest active session.
+
+Invalid deadline format:
+Use ISO datetime or `HH:mm`, for example `2026-07-07T06:00:00+02:00`, `2026-07-07T06:00:00`, or `06:00`.
 
 ## License
 
