@@ -1,5 +1,61 @@
 # Host Validation Log
 
+## 2026-07-07T21:19:33+02:00
+
+OS:
+Windows
+
+Node version:
+v22.13.0
+
+Host tested:
+Codex MCP host
+
+Config path if used:
+Current Codex MCP host session with Owlyn available over stdio. The intended validation config is `STDIO, node dist/index.js, OWLYN_DB_PATH host-validation.sqlite`.
+
+Command used:
+
+```txt
+node dist/index.js
+```
+
+Tools visible:
+All 8 Owlyn tools were visible:
+
+- owlyn_start
+- owlyn_status
+- owlyn_checkpoint
+- owlyn_should_continue
+- owlyn_plan_next
+- owlyn_end
+- owlyn_list_sessions
+- owlyn_report
+
+structuredContent:
+Yes. Tool responses returned structured `data`, `instruction`, and `safety`.
+
+Session:
+`owl_20260707_211907_ba3ddd`
+
+Session flow result:
+Passed.
+
+Flow:
+`owlyn_start` -> `owlyn_checkpoint` -> `owlyn_should_continue` -> `owlyn_plan_next` -> `owlyn_end`
+
+Continuation result:
+`owlyn_should_continue` returned `should_continue: true`.
+
+Required phrase:
+The `recommended_action` included `Do not stop only because the current task is complete.`
+
+Errors:
+None.
+
+Final conclusion:
+Owlyn MCP v0.1.0-alpha.1 is validated in Codex MCP host on Windows over STDIO.
+
 ## 2026-07-07T16:48:04.9070517+02:00
 
 OS:

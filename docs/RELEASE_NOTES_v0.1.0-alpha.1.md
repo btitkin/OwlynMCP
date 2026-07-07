@@ -43,11 +43,16 @@ Validation:
 - npm run smoke:mcp passed
 - npm run check passed
 - npm pack --dry-run passed
+- Real-host validation passed in Codex MCP host on Windows.
+- All 8 tools were visible.
+- structuredContent worked.
+- Full session flow passed:
+  owlyn_start -> owlyn_checkpoint -> owlyn_should_continue -> owlyn_plan_next -> owlyn_end
 
 Known limitations:
 
 - Tested through the official MCP SDK stdio path.
-- Real host validation is still in progress.
+- Other hosts still need validation.
 - Owlyn does not keep an MCP host alive by itself.
 - The host agent must call Owlyn tools and follow the returned policy.
 - No cloud, no telemetry, no auth, no background worker in v0.1.

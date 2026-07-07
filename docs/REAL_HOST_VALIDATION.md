@@ -38,13 +38,13 @@ The agent should:
 
 | Host | OS | Config tested | Tools listed | structuredContent | Session flow passed | Notes |
 | ---- | -- | ------------- | ------------ | ----------------- | ------------------ | ----- |
-| Codex | Windows | Not available in current running session | Not run in real host | Not run in real host | Not run in real host | Current Codex session exposes no in-session config/reload mechanism for attaching a new local MCP server. SDK stdio validation passed separately. |
+| Codex MCP host | Windows | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Session `owl_20260707_211907_ba3ddd` completed successfully. `owlyn_should_continue` returned `should_continue: true` and included the required continuation phrase. |
 | Cursor | Windows | Pending | Pending | Pending | Pending | |
 | Claude Desktop | Windows | Pending | Pending | Pending | Pending | |
 
-## Manual validation still required
+## Manual validation still required for other hosts
 
-The current Codex session could not be reconfigured to load a new local MCP server during the run. Do not treat SDK smoke tests as a replacement for real host validation.
+Codex MCP host validation passed on Windows. Cursor and Claude Desktop still need real-host validation. Do not treat SDK smoke tests as a replacement for real host validation in those hosts.
 
 Use this server command in a real MCP host:
 

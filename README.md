@@ -19,7 +19,7 @@ Owlyn gives agents a persistent work-session clock, checkpoints, deadlines, and 
 Owlyn MCP is a local-first MCP work-session supervisor for AI coding agents. It is not a simple timer, a todo app, or a background worker.
 
 **Status:** `v0.1.0-alpha.1`<br />
-Tested with official MCP SDK stdio integration. Real host validation in progress.
+Tested with official MCP SDK stdio integration. Validated in Codex MCP host on Windows. Other hosts pending.
 
 ## Quick Start
 
