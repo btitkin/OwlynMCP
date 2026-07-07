@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "Time-aware work sessions for AI agents.",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/btitkin/OwlynMCP.git"
+  },
+  "homepage": "https://github.com/btitkin/OwlynMCP",
+  "bugs": {
+    "url": "https://github.com/btitkin/OwlynMCP/issues"
+  },
   "bin": {
     "owlyn-mcp": "./dist/index.js"
   },
@@ -11,7 +20,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "smoke:mcp": "node scripts/mcp-smoke.mjs"
+    "smoke:mcp": "node scripts/mcp-smoke.mjs",
+    "check": "npm run typecheck && npm run build && npm test && npm run smoke:mcp"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.1",
@@ -33,7 +43,12 @@
   "files": [
     "dist",
     "scripts",
+    "docs",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "README.md",
-    "LICENSE"
+    "SECURITY.md",
+    "LICENSE",
+    "Owlyn.png"
   ]
 }

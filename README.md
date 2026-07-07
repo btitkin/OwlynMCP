@@ -1,86 +1,61 @@
+<p align="center">
+  <img src="./Owlyn.png" alt="Owlyn MCP logo" width="420" />
+</p>
+
 # Owlyn MCP
 
-Time-aware work sessions for AI agents.
+<p align="center">
+  <strong>Time-aware work sessions for AI agents.</strong>
+</p>
 
-Owlyn MCP gives AI agents work-session awareness: deadlines, checkpoints, elapsed time, remaining time, and structured decisions about whether to continue.
+AI agents often stop too early.
 
-## What It Does
+You ask an agent to work for the night.<br />
+It finishes the first task in 20 minutes.<br />
+Then it says "done".
 
-Owlyn MCP gives agents a persistent work-session state: start time, deadline, elapsed time, remaining time, checkpoints, next tasks, and continuation decisions.
+Owlyn gives agents a persistent work-session clock, checkpoints, deadlines, and structured continuation decisions so they know when to keep going.
 
-It is a local-first Model Context Protocol server for AI coding agents. It helps agents track when a session started, how much time remains until the deadline, what has been completed, what is left, and whether it is safe and useful to continue.
+Owlyn MCP is a local-first MCP work-session supervisor for AI coding agents. It is not a simple timer, a todo app, or a background worker.
 
-## Why It Exists
+**Status:** `v0.1.0-alpha.1`<br />
+Tested with official MCP SDK stdio integration. Real host validation in progress.
 
-Many agents complete the first requested task and stop, even when the user intended a longer work session. Owlyn helps agents keep working safely until a deadline by making the continuation decision explicit.
+## Quick Start
 
-The key behavior is:
+Requirements:
 
-```txt
-Finish meaningful work.
-Checkpoint it.
-Ask Owlyn whether to continue.
-If Owlyn says continue, do not stop only because the current task is complete.
-```
+- Node.js 20+
+- npm
 
-## What It Does Not Do
-
-Owlyn is not a normal timer, billing tracker, todo app, project manager, or autonomous daemon.
-
-Owlyn does not run your agent in the background.
-Owlyn does not bypass host limits.
-Owlyn does not execute shell commands.
-Owlyn does not modify your project files.
-Owlyn does not call external services.
-Owlyn does not make destructive actions safe.
-
-Owlyn MCP does not keep your agent alive by itself. It provides session state and continuation policy through MCP tools. Your host agent must call these tools and follow the returned guidance.
-
-## How It Works
-
-1. The agent starts a session with `owlyn_start`.
-2. The agent works on the requested goal.
-3. After meaningful progress, the agent calls `owlyn_checkpoint`.
-4. The agent calls `owlyn_should_continue`.
-5. If `should_continue` is true, the agent picks the next useful safe task and continues.
-6. If `should_continue` is false, the agent stops and explains why.
-7. The agent ends the session with `owlyn_end`.
-
-## Installation
-
-From source:
+Install and build:
 
 ```bash
 npm install
 npm run build
 ```
 
-Owlyn requires Node.js 20 or newer.
-
-## Build
-
-```bash
-npm run typecheck
-npm run build
-```
-
-## Run
-
-Development mode:
-
-```bash
-npm run dev
-```
-
-Built mode:
+Run the stdio MCP server:
 
 ```bash
 node dist/index.js
 ```
 
-The server runs over MCP stdio transport.
+Run the release checks:
 
-## MCP Client Configuration
+```bash
+npm run check
+```
+
+Run the manual MCP smoke test:
+
+```bash
+npm run smoke:mcp
+```
+
+The smoke test uses the official MCP SDK client and calls `owlyn_start`, `owlyn_checkpoint`, `owlyn_should_continue`, `owlyn_plan_next`, and `owlyn_end`.
+
+## Example MCP Config
 
 Generic stdio config:
 
@@ -98,14 +73,14 @@ Generic stdio config:
 }
 ```
 
-Windows path example:
+Windows example:
 
 ```json
 {
   "mcpServers": {
     "owlyn": {
       "command": "node",
-      "args": ["C:\\Users\\you\\Projects\\owlyn-mcp\\dist\\index.js"],
+      "args": ["C:\\Users\\you\\Projects\\OwlynMCP\\dist\\index.js"],
       "env": {
         "OWLYN_DB_PATH": "C:\\Users\\you\\.owlyn\\owlyn.sqlite"
       }
@@ -114,14 +89,14 @@ Windows path example:
 }
 ```
 
-macOS/Linux path example:
+macOS/Linux example:
 
 ```json
 {
   "mcpServers": {
     "owlyn": {
       "command": "node",
-      "args": ["/Users/you/projects/owlyn-mcp/dist/index.js"],
+      "args": ["/Users/you/projects/OwlynMCP/dist/index.js"],
       "env": {
         "OWLYN_DB_PATH": "/Users/you/.owlyn/owlyn.sqlite"
       }
@@ -130,57 +105,56 @@ macOS/Linux path example:
 }
 ```
 
-Using npm global install:
+More host examples are in [docs/HOST_SETUP.md](./docs/HOST_SETUP.md).
 
-```json
-{
-  "mcpServers": {
-    "owlyn": {
-      "command": "owlyn-mcp",
-      "args": []
-    }
-  }
-}
+## Agent Instruction
+
+Copy this into your coding agent instructions when using Owlyn:
+
+```txt
+You have access to Owlyn MCP.
+
+At the beginning of work, call owlyn_start with the user's goal and deadline.
+
+After meaningful progress, call owlyn_checkpoint.
+
+Then call owlyn_should_continue.
+
+If should_continue is true, do not stop only because the current task is complete. Pick the next highest-value low-risk task and continue.
+
+If multiple safe next tasks exist, call owlyn_plan_next.
+
+Before final response, call owlyn_end.
+
+Never continue destructive, irreversible, external, expensive, deployment, credential, or approval-requiring work without explicit user approval.
 ```
 
-Development mode:
-
-```json
-{
-  "mcpServers": {
-    "owlyn-dev": {
-      "command": "npm",
-      "args": ["run", "dev"],
-      "cwd": "/absolute/path/to/owlyn-mcp"
-    }
-  }
-}
-```
-
-Only use `cwd` if your MCP host supports it. If it does not, run from the project directory or use an absolute `node` path.
+See [docs/AGENT_INSTRUCTIONS.md](./docs/AGENT_INSTRUCTIONS.md) for a standalone copy-paste version.
 
 ## Tools
 
 | Tool | Purpose |
 | --- | --- |
 | `owlyn_start` | Start a work session with a goal, deadline, timezone, and mode. |
-| `owlyn_status` | Return current time, elapsed time, remaining time, deadline status, and checkpoint state. |
+| `owlyn_status` | Return current time, elapsed time, remaining time, deadline status, and latest checkpoint state. |
 | `owlyn_checkpoint` | Save meaningful progress, completed tasks, next tasks, blockers, changed files, validation, confidence, and risk. |
 | `owlyn_should_continue` | Decide whether the agent should continue working. |
 | `owlyn_plan_next` | Rank candidate next tasks by impact, risk, approval requirement, category, and fit to remaining time. |
 | `owlyn_end` | End a session and return a final report. |
-| `owlyn_list_sessions` | List previous sessions. |
-| `owlyn_report` | Return a detailed report without ending the session. |
+| `owlyn_list_sessions` | List active, completed, abandoned, or all sessions. |
+| `owlyn_report` | Return a detailed session report without ending the session. |
 
-## Example Workflow
+Full tool documentation is in [docs/TOOLS.md](./docs/TOOLS.md).
 
-User request:
+## Demo Flow
+
+User:
 
 ```txt
-Work on this repo until 06:00. If you finish the first task early, keep improving the project safely.
+Work on this repo until 06:00. If you finish early, continue with safe useful improvements.
 ```
 
-Agent starts session:
+Agent starts a session:
 
 ```json
 {
@@ -194,31 +168,16 @@ Agent starts session:
 }
 ```
 
-Agent checkpoints:
+Agent finishes the first task and checkpoints:
 
 ```json
 {
   "tool": "owlyn_checkpoint",
   "input": {
     "summary": "Implemented deadline parsing and added tests.",
-    "completed_tasks": [
-      "Added HH:mm deadline parsing",
-      "Added ISO deadline parsing",
-      "Added timezone default"
-    ],
-    "next_tasks": [
-      "Add policy engine tests",
-      "Document example host configuration",
-      "Add final report generation"
-    ],
-    "blockers": [],
-    "files_changed": [
-      "src/time.ts",
-      "tests/time.test.ts"
-    ],
-    "validation_results": [
-      "npm test passed for time.test.ts"
-    ],
+    "completed_tasks": ["Added HH:mm deadline parsing", "Added timezone tests"],
+    "next_tasks": ["Add policy tests", "Document host setup", "Run release checks"],
+    "validation_results": ["npm test passed"],
     "confidence": "high",
     "risk_level": "low"
   }
@@ -241,7 +200,7 @@ Agent asks whether to continue:
 }
 ```
 
-Expected result:
+Expected continuation signal:
 
 ```json
 {
@@ -251,29 +210,11 @@ Expected result:
 }
 ```
 
-## Agent Instruction
+Longer example: [docs/EXAMPLE_SESSION.md](./docs/EXAMPLE_SESSION.md).
 
-Copy this into your coding agent instructions when using Owlyn:
+## What Owlyn Stores
 
-```txt
-You have access to Owlyn MCP.
-
-At the beginning of work, call owlyn_start with the user's goal and deadline.
-
-After every meaningful completed task, call owlyn_checkpoint.
-
-Then call owlyn_should_continue.
-
-If should_continue is true, do not stop only because the current task is complete. Pick the next highest-value low-risk task and continue.
-
-If multiple safe next tasks exist, call owlyn_plan_next.
-
-If should_continue is false, stop and summarize why.
-
-Never perform destructive, irreversible, external, credential-requiring, payment-related, deployment-related, or approval-requiring actions unless the user explicitly approves.
-```
-
-## Storage
+Owlyn is local-first and persists session state in SQLite.
 
 Default database path:
 
@@ -281,40 +222,63 @@ Default database path:
 ~/.owlyn/owlyn.sqlite
 ```
 
-Owlyn creates the parent directory automatically.
-
-It stores only what the agent sends to it:
-
-- session goals
-- checkpoints
-- files changed
-- validation notes
-- task lists
-- continuation decisions
-
-Do not store secrets in checkpoint summaries, task descriptions, notes, or validation output.
-
-## Environment Variables
-
-Override the database path:
+Override it with:
 
 ```bash
 OWLYN_DB_PATH=/custom/path/owlyn.sqlite
 ```
 
-If `max_work_minutes` is provided to `owlyn_start`, Owlyn uses the earlier of the resolved deadline and `started_at + max_work_minutes`.
+Owlyn stores only what the agent sends to it:
 
-## Safety
+- session goals
+- notes
+- checkpoints
+- task lists
+- file-change notes
+- validation notes
+- continuation decisions
 
-Owlyn is intentionally conservative. It should stop when work requires user approval, when destructive action is pending, when the deadline is reached, or when risk is high.
+Do not store secrets in goals, notes, checkpoints, task descriptions, or validation output.
 
-Owlyn does not execute shell commands, edit project files, call networks, upload data, deploy, collect telemetry, ask for credentials, or run a hidden background loop.
+## Safety and Limitations
 
-## Limitations
+Owlyn MCP is intentionally conservative.
 
-Owlyn depends on the host MCP client, model behavior, agent instructions, context limits, tool-call limits, user approval gates, rate limits, and runtime timeouts.
+It should stop when work requires user approval, when destructive action is pending, when the deadline is reached, or when risk is high.
 
-It gives an agent structured session memory and continuation guidance. It cannot force the host agent to keep running or guarantee the agent follows the returned guidance.
+Owlyn v0.1 has:
+
+- local-first SQLite persistence
+- stdio MCP transport
+- no cloud
+- no telemetry
+- no auth
+- no browser extension
+- no dashboard
+- no background autonomous worker
+- no shell execution by the server
+- no project-file modification by the server
+
+Owlyn MCP does not keep your agent alive by itself. It provides session state and continuation policy through MCP tools. Your host agent must call the tools and follow Owlyn's policy.
+
+Host behavior still depends on the MCP client, model, agent instructions, context limits, tool-call limits, user approval gates, rate limits, and runtime timeouts.
+
+## Troubleshooting
+
+`better-sqlite3` native dependency issues:
+Make sure Node.js and npm are installed normally for your platform. If installation fails, check that your Node version is supported and that your environment can install native npm packages.
+
+Node version requirement:
+Owlyn requires Node.js 20 or newer. Check with `node --version`.
+
+`OWLYN_DB_PATH` usage:
+Set `OWLYN_DB_PATH` when you want Owlyn to store its SQLite database somewhere other than `~/.owlyn/owlyn.sqlite`. The parent directory is created automatically.
+
+No active session found:
+Call `owlyn_start` first, or pass a known `session_id` to tools that support it. Completed or abandoned sessions are not treated as the latest active session.
+
+Invalid deadline format:
+Use ISO datetime or `HH:mm`, for example `2026-07-07T06:00:00+02:00`, `2026-07-07T06:00:00`, or `06:00`.
 
 ## Roadmap
 
@@ -337,67 +301,14 @@ These are not implemented in v0.1.
 
 ```bash
 npm install
-npm run dev
-```
-
-Project layout:
-
-```txt
-src/
-  index.ts
-  server.ts
-  db.ts
-  time.ts
-  policy.ts
-  ranking.ts
-  report.ts
-  tools/
-tests/
-```
-
-## Testing
-
-```bash
 npm run typecheck
 npm run build
 npm test
-```
-
-Tests use temporary SQLite database paths and do not write to the user's real `~/.owlyn` directory.
-
-Manual MCP smoke test after building:
-
-```bash
-npm run build
 npm run smoke:mcp
+npm run check
 ```
 
-The smoke test uses the official MCP SDK client and calls:
-
-- `owlyn_start`
-- `owlyn_checkpoint`
-- `owlyn_should_continue`
-- `owlyn_plan_next`
-- `owlyn_end`
-
-It uses a temporary SQLite database unless `OWLYN_DB_PATH` is set.
-
-## Troubleshooting
-
-`better-sqlite3` native dependency issues:
-Make sure Node.js and npm are installed normally for your platform. If installation fails, check that your Node version is supported and that your environment can install native npm packages.
-
-Node version requirement:
-Owlyn requires Node.js 20 or newer. Check with `node --version`.
-
-`OWLYN_DB_PATH` usage:
-Set `OWLYN_DB_PATH` when you want Owlyn to store its SQLite database somewhere other than `~/.owlyn/owlyn.sqlite`. The parent directory is created automatically.
-
-No active session found:
-Call `owlyn_start` first, or pass a known `session_id` to tools that support it. Completed or abandoned sessions are not treated as the latest active session.
-
-Invalid deadline format:
-Use ISO datetime or `HH:mm`, for example `2026-07-07T06:00:00+02:00`, `2026-07-07T06:00:00`, or `06:00`.
+Release checklist: [RELEASE_CHECKLIST.md](./RELEASE_CHECKLIST.md).
 
 ## License
 
