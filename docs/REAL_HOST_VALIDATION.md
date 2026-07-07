@@ -38,6 +38,64 @@ The agent should:
 
 | Host | OS | Config tested | Tools listed | structuredContent | Session flow passed | Notes |
 | ---- | -- | ------------- | ------------ | ----------------- | ------------------ | ----- |
-| Codex | Windows | Pending | Pending | Pending | Pending | |
+| Codex | Windows | Not available in current running session | Not run in real host | Not run in real host | Not run in real host | Current Codex session exposes no in-session config/reload mechanism for attaching a new local MCP server. SDK stdio validation passed separately. |
 | Cursor | Windows | Pending | Pending | Pending | Pending | |
 | Claude Desktop | Windows | Pending | Pending | Pending | Pending | |
+
+## Manual validation still required
+
+The current Codex session could not be reconfigured to load a new local MCP server during the run. Do not treat SDK smoke tests as a replacement for real host validation.
+
+Use this server command in a real MCP host:
+
+```txt
+node C:\Users\btitk\Documents\OwlynMCP\dist\index.js
+```
+
+Use this test database path:
+
+```txt
+C:\Users\btitk\.owlyn\host-validation.sqlite
+```
+
+Example MCP config:
+
+```json
+{
+  "mcpServers": {
+    "owlyn": {
+      "command": "node",
+      "args": ["C:\\Users\\btitk\\Documents\\OwlynMCP\\dist\\index.js"],
+      "env": {
+        "OWLYN_DB_PATH": "C:\\Users\\btitk\\.owlyn\\host-validation.sqlite"
+      }
+    }
+  }
+}
+```
+
+After adding the config, restart or reload the host if required, then use this instruction:
+
+```txt
+Use Owlyn MCP. Start a work session until 06:00 Europe/Warsaw for this goal:
+"Validate Owlyn MCP host integration."
+
+After starting, create a checkpoint saying the first host validation step is complete.
+Then call owlyn_should_continue with:
+current_task_done: true
+has_next_tasks: true
+requires_user_approval: false
+risk_level: low
+
+If Owlyn says should_continue is true, confirm that the returned recommendation includes:
+"Do not stop only because the current task is complete."
+
+Then call owlyn_plan_next with 3 safe candidate tasks:
+- Review README host setup docs
+- Review AGENT_INSTRUCTIONS.md
+- Review RELEASE_CHECKLIST.md
+
+Then call owlyn_end with a short final summary.
+```
+
+Record whether the host listed all 8 tools, returned structuredContent, and completed the full session flow.
