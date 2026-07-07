@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./Owlyn.png" alt="Owlyn MCP logo" width="560" />
+  <img src="./Owlyn.png" alt="Owlyn MCP logo" width="760" />
 </p>
 
 # Owlyn MCP
