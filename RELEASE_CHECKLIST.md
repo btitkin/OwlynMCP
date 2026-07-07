@@ -28,3 +28,25 @@ Expected result:
 ```
 
 If `OWLYN_DB_PATH` is not set, the smoke test uses a temporary SQLite database and removes it after the run.
+
+## Create alpha tag
+
+Commands:
+
+```bash
+git status
+npm run check
+npm pack --dry-run
+git tag v0.1.0-alpha.1
+git push origin v0.1.0-alpha.1
+```
+
+Then create a GitHub Release from tag:
+
+```txt
+v0.1.0-alpha.1
+```
+
+Use `docs/RELEASE_NOTES_v0.1.0-alpha.1.md` as the release notes.
+
+Do not create or push the tag until the release owner explicitly approves it.
