@@ -95,11 +95,26 @@ These items are not implemented in the current alpha release.
 
 Alpha: the repository identifies version `v0.1.0-alpha.1`, includes tests, documentation and a manual MCP smoke test, and has been validated in Codex MCP host on Windows. Broader host compatibility should still be treated as pending unless verified in the target host.
 
+## Host Validation Status
+
+Validated:
+
+- Codex MCP host on Windows
+
+Pending:
+
+- Cursor
+- Claude Desktop
+- other MCP stdio hosts
+
+See [real host validation](./docs/REAL_HOST_VALIDATION.md), [host setup](./docs/HOST_SETUP.md), and the shared [validation prompt](./docs/VALIDATION_PROMPT.md).
+
 ## More Docs
 
 - [FAQ](./docs/FAQ.md)
 - [Host setup](./docs/HOST_SETUP.md)
 - [Real host validation](./docs/REAL_HOST_VALIDATION.md)
+- [Validation prompt](./docs/VALIDATION_PROMPT.md)
 - [npm publishing preparation](./docs/NPM_PUBLISHING.md)
 - [Roadmap](./docs/ROADMAP.md)
 - [Tool reference](./docs/TOOLS.md)

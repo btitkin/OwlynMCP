@@ -18,11 +18,12 @@ Focus: public presentation, CI, npm publishing readiness, and docs.
 
 Focus: host validation expansion.
 
-- Cursor validation
-- Claude Desktop validation
+- Cursor validation preparation
+- Claude Desktop validation preparation
+- clearer host validation matrix
+- reusable validation prompt and template
 - additional MCP stdio host validation where available
-- host-specific notes
-- validation matrix updates
+- host-specific notes without overclaiming support
 
 ## v0.1.0-beta.1
 

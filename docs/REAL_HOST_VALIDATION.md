@@ -1,8 +1,8 @@
 # Real Host Validation
 
-Use this checklist to validate Owlyn MCP in real MCP hosts.
+Use this matrix to track real MCP host validation. Do not mark a host as passed unless it was actually tested in that host.
 
-## A. Generic Validation Goal
+## Validation Goal
 
 Confirm that a real MCP host can:
 
@@ -14,18 +14,21 @@ Confirm that a real MCP host can:
 - receive structuredContent
 - continue work when should_continue is true
 - stop when should_continue is false
+- call owlyn_plan_next
+- call owlyn_end
 
-## B. Test Scenario
+## Validation Matrix
 
-Use this user instruction:
+| Host | OS | Version | Config | Tools visible | structuredContent | Session flow | Status | Notes |
+| ---- | -- | ------- | ------ | ------------- | ----------------- | ------------ | ------ | ----- |
+| Codex MCP host | Windows | v0.1.0-alpha.1 or later | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Passed | Session `owl_20260707_211907_ba3ddd` completed successfully. `owlyn_should_continue` returned `should_continue: true` and included the required continuation phrase. |
+| Cursor | Windows | Pending | Pending validation | Pending | Pending | Pending | Pending | Use [CURSOR_VALIDATION.md](./CURSOR_VALIDATION.md). |
+| Claude Desktop | Windows | Pending | Pending validation | Pending | Pending | Pending | Pending | Use [CLAUDE_DESKTOP_VALIDATION.md](./CLAUDE_DESKTOP_VALIDATION.md). |
+| Generic stdio MCP client | Pending | Pending | Pending validation | Pending | Pending | Pending | Pending | SDK stdio tests pass, but a separate real generic host has not been recorded. |
 
-```txt
-Use Owlyn MCP. Work on this repository until 06:00. If you finish the first task early, checkpoint progress, ask Owlyn whether to continue, and continue only with safe low-risk improvements.
-```
+## Expected Behavior
 
-## C. Expected Behavior
-
-The agent should:
+The host should:
 
 - call owlyn_start at the beginning
 - call owlyn_checkpoint after meaningful progress
@@ -34,68 +37,16 @@ The agent should:
 - call owlyn_plan_next if multiple safe next tasks exist
 - call owlyn_end before final response
 
-## D. Host Result Table
-
-| Host | OS | Config tested | Tools listed | structuredContent | Session flow passed | Notes |
-| ---- | -- | ------------- | ------------ | ----------------- | ------------------ | ----- |
-| Codex MCP host | Windows | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Session `owl_20260707_211907_ba3ddd` completed successfully. `owlyn_should_continue` returned `should_continue: true` and included the required continuation phrase. |
-| Cursor | Windows | Pending | Pending | Pending | Pending | |
-| Claude Desktop | Windows | Pending | Pending | Pending | Pending | |
-
-## Manual validation still required for other hosts
-
-Codex MCP host validation passed on Windows. Cursor and Claude Desktop still need real-host validation. Do not treat SDK smoke tests as a replacement for real host validation in those hosts.
-
-Use this server command in a real MCP host:
+Required continuation phrase:
 
 ```txt
-node C:\Users\btitk\Documents\OwlynMCP\dist\index.js
+Do not stop only because the current task is complete.
 ```
 
-Use this test database path:
+## Shared Prompt
 
-```txt
-C:\Users\btitk\.owlyn\host-validation.sqlite
-```
+Use [VALIDATION_PROMPT.md](./VALIDATION_PROMPT.md) for each host.
 
-Example MCP config:
+## Template
 
-```json
-{
-  "mcpServers": {
-    "owlyn": {
-      "command": "node",
-      "args": ["C:\\Users\\btitk\\Documents\\OwlynMCP\\dist\\index.js"],
-      "env": {
-        "OWLYN_DB_PATH": "C:\\Users\\btitk\\.owlyn\\host-validation.sqlite"
-      }
-    }
-  }
-}
-```
-
-After adding the config, restart or reload the host if required, then use this instruction:
-
-```txt
-Use Owlyn MCP. Start a work session until 06:00 Europe/Warsaw for this goal:
-"Validate Owlyn MCP host integration."
-
-After starting, create a checkpoint saying the first host validation step is complete.
-Then call owlyn_should_continue with:
-current_task_done: true
-has_next_tasks: true
-requires_user_approval: false
-risk_level: low
-
-If Owlyn says should_continue is true, confirm that the returned recommendation includes:
-"Do not stop only because the current task is complete."
-
-Then call owlyn_plan_next with 3 safe candidate tasks:
-- Review README host setup docs
-- Review AGENT_INSTRUCTIONS.md
-- Review RELEASE_CHECKLIST.md
-
-Then call owlyn_end with a short final summary.
-```
-
-Record whether the host listed all 8 tools, returned structuredContent, and completed the full session flow.
+Use [HOST_VALIDATION_TEMPLATE.md](./HOST_VALIDATION_TEMPLATE.md) to record a new validation result.

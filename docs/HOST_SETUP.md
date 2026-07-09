@@ -9,7 +9,9 @@ npm install
 npm run build
 ```
 
-## Generic stdio MCP Config
+## A. Generic stdio MCP Config
+
+Use an absolute path to `dist/index.js`.
 
 ```json
 {
@@ -25,7 +27,49 @@ npm run build
 }
 ```
 
-## Windows Path Example
+## B. Codex MCP Host on Windows
+
+Status: validated on Windows.
+
+Known working pattern:
+
+```txt
+command:
+node
+
+args:
+C:\Users\btitk\Documents\OwlynMCP\dist\index.js
+
+env:
+OWLYN_DB_PATH=C:\Users\btitk\.owlyn\host-validation.sqlite
+
+working directory:
+C:\Users\btitk\Documents\OwlynMCP
+```
+
+JSON-style config shape:
+
+```json
+{
+  "mcpServers": {
+    "owlyn": {
+      "command": "node",
+      "args": ["C:\\Users\\btitk\\Documents\\OwlynMCP\\dist\\index.js"],
+      "env": {
+        "OWLYN_DB_PATH": "C:\\Users\\btitk\\.owlyn\\host-validation.sqlite"
+      }
+    }
+  }
+}
+```
+
+## C. Cursor
+
+Status: pending validation.
+
+Cursor MCP configuration usually follows the `mcpServers` object shape. File locations, UI settings, and reload behavior may vary by Cursor version.
+
+Windows example:
 
 ```json
 {
@@ -41,7 +85,7 @@ npm run build
 }
 ```
 
-## macOS/Linux Path Example
+macOS/Linux example:
 
 ```json
 {
@@ -57,56 +101,47 @@ npm run build
 }
 ```
 
-## Codex-Style Config
+See [CURSOR_VALIDATION.md](./CURSOR_VALIDATION.md).
 
-Use the generic stdio config shape if your Codex environment supports MCP server entries. Prefer an absolute path to `dist/index.js`.
+## D. Claude Desktop
 
-```json
-{
-  "mcpServers": {
-    "owlyn": {
-      "command": "node",
-      "args": ["/absolute/path/to/OwlynMCP/dist/index.js"]
-    }
-  }
-}
-```
-
-## Cursor-Style Config
-
-Cursor MCP configuration usually follows the `mcpServers` object shape. File locations and UI settings may vary by Cursor version.
-
-```json
-{
-  "mcpServers": {
-    "owlyn": {
-      "command": "node",
-      "args": ["/absolute/path/to/OwlynMCP/dist/index.js"],
-      "env": {
-        "OWLYN_DB_PATH": "/absolute/path/to/.owlyn/owlyn.sqlite"
-      }
-    }
-  }
-}
-```
-
-## Claude Desktop-Style Config
+Status: pending validation.
 
 Claude Desktop MCP configuration usually uses a `claude_desktop_config.json` file with an `mcpServers` object. Exact file location depends on OS and Claude Desktop version.
 
+Windows example:
+
 ```json
 {
   "mcpServers": {
     "owlyn": {
       "command": "node",
-      "args": ["/absolute/path/to/OwlynMCP/dist/index.js"],
+      "args": ["C:\\Users\\you\\Projects\\OwlynMCP\\dist\\index.js"],
       "env": {
-        "OWLYN_DB_PATH": "/absolute/path/to/.owlyn/owlyn.sqlite"
+        "OWLYN_DB_PATH": "C:\\Users\\you\\.owlyn\\owlyn.sqlite"
       }
     }
   }
 }
 ```
+
+macOS/Linux example:
+
+```json
+{
+  "mcpServers": {
+    "owlyn": {
+      "command": "node",
+      "args": ["/Users/you/projects/OwlynMCP/dist/index.js"],
+      "env": {
+        "OWLYN_DB_PATH": "/Users/you/.owlyn/owlyn.sqlite"
+      }
+    }
+  }
+}
+```
+
+See [CLAUDE_DESKTOP_VALIDATION.md](./CLAUDE_DESKTOP_VALIDATION.md).
 
 ## Development Mode
 
