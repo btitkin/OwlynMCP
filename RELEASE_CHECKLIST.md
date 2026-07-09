@@ -50,3 +50,21 @@ v0.1.0-alpha.1
 Use `docs/RELEASE_NOTES_v0.1.0-alpha.1.md` as the release notes.
 
 Do not create or push the tag until the release owner explicitly approves it.
+
+## Codex validation checklist
+
+Before future releases, verify:
+
+- Codex sees all 8 Owlyn tools
+- owlyn_start works
+- owlyn_checkpoint works
+- owlyn_should_continue works
+- owlyn_plan_next works
+- owlyn_end works
+- structuredContent works
+- continuation phrase appears
+- approval gate stops continuation
+- destructive gate stops continuation
+- focused mode stops after current task
+- night_shift mode continues before deadline
+- report/end output is useful

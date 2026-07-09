@@ -2,6 +2,8 @@
 
 Use this matrix to track real MCP host validation. Do not mark a host as passed unless it was actually tested in that host.
 
+Owlyn MCP is currently Codex-first. Other MCP stdio hosts are intended compatibility targets, but they are not the focus until Codex behavior is hardened.
+
 ## Validation Goal
 
 Confirm that a real MCP host can:
@@ -22,8 +24,8 @@ Confirm that a real MCP host can:
 | Host | OS | Version | Config | Tools visible | structuredContent | Session flow | Status | Notes |
 | ---- | -- | ------- | ------ | ------------- | ----------------- | ------------ | ------ | ----- |
 | Codex MCP host | Windows | v0.1.0-alpha.1 or later | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Passed | Session `owl_20260707_211907_ba3ddd` completed successfully. `owlyn_should_continue` returned `should_continue: true` and included the required continuation phrase. |
-| Cursor | Windows | Pending | Pending validation | Pending | Pending | Pending | Pending | Use [CURSOR_VALIDATION.md](./CURSOR_VALIDATION.md). |
-| Claude Desktop | Windows | Pending | Pending validation | Pending | Pending | Pending | Pending | Use [CLAUDE_DESKTOP_VALIDATION.md](./CLAUDE_DESKTOP_VALIDATION.md). |
+| Cursor | Windows | Future target | Pending validation | Pending | Pending | Pending | Pending | Future compatibility target. Use [CURSOR_VALIDATION.md](./CURSOR_VALIDATION.md) when this becomes a priority. |
+| Claude Desktop | Windows | Future target | Pending validation | Pending | Pending | Pending | Pending | Future compatibility target. Use [CLAUDE_DESKTOP_VALIDATION.md](./CLAUDE_DESKTOP_VALIDATION.md) when this becomes a priority. |
 | Generic stdio MCP client | Pending | Pending | Pending validation | Pending | Pending | Pending | Pending | SDK stdio tests pass, but a separate real generic host has not been recorded. |
 
 ## Expected Behavior

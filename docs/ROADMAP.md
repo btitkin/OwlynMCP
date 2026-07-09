@@ -16,14 +16,14 @@ Focus: public presentation, CI, npm publishing readiness, and docs.
 
 ## v0.1.0-alpha.3
 
-Focus: host validation expansion.
+Focus: Codex-first hardening and validation.
 
-- Cursor validation preparation
-- Claude Desktop validation preparation
+- Codex MCP setup guide
+- Codex agent instruction guide
+- Codex validation scenario matrix
+- Codex validation log
 - clearer host validation matrix
-- reusable validation prompt and template
-- additional MCP stdio host validation where available
-- host-specific notes without overclaiming support
+- keep Cursor and Claude Desktop as future compatibility targets without overclaiming support
 
 ## v0.1.0-beta.1
 

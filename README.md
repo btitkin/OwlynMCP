@@ -93,9 +93,30 @@ These items are not implemented in the current alpha release.
 
 ## Status
 
-Alpha: the repository identifies version `v0.1.0-alpha.1`, includes tests, documentation and a manual MCP smoke test, and has been validated in Codex MCP host on Windows. Broader host compatibility should still be treated as pending unless verified in the target host.
+Alpha: the current public release is `v0.1.0-alpha.2`, includes tests, documentation, GitHub Actions CI and a manual MCP smoke test, and has been validated in Codex MCP host on Windows. Broader host compatibility should still be treated as pending unless verified in the target host.
 
-## Host Validation Status
+## Codex-first status
+
+Owlyn MCP is currently validated in Codex MCP host on Windows.
+
+The next focus is deeper Codex workflow validation:
+
+- long-running work sessions
+- continuation decisions
+- checkpoint quality
+- restart/reload behavior
+- safe next-task planning
+
+Other MCP hosts remain pending.
+
+Codex docs:
+
+- [Codex MCP setup](./docs/CODEX_MCP_SETUP.md)
+- [Codex agent instructions](./docs/CODEX_AGENT_INSTRUCTIONS.md)
+- [Codex validation scenarios](./docs/CODEX_VALIDATION_SCENARIOS.md)
+- [Codex validation log](./docs/CODEX_VALIDATION_LOG.md)
+
+## General Host Validation Status
 
 Validated:
 
@@ -114,6 +135,10 @@ See [real host validation](./docs/REAL_HOST_VALIDATION.md), [host setup](./docs/
 - [FAQ](./docs/FAQ.md)
 - [Host setup](./docs/HOST_SETUP.md)
 - [Real host validation](./docs/REAL_HOST_VALIDATION.md)
+- [Codex MCP setup](./docs/CODEX_MCP_SETUP.md)
+- [Codex agent instructions](./docs/CODEX_AGENT_INSTRUCTIONS.md)
+- [Codex validation scenarios](./docs/CODEX_VALIDATION_SCENARIOS.md)
+- [Codex validation log](./docs/CODEX_VALIDATION_LOG.md)
 - [Validation prompt](./docs/VALIDATION_PROMPT.md)
 - [npm publishing preparation](./docs/NPM_PUBLISHING.md)
 - [Roadmap](./docs/ROADMAP.md)
