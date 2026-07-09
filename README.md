@@ -6,7 +6,16 @@
 
 Owlyn MCP is a local-first MCP work-session supervisor for AI coding agents that need deadlines, checkpoints and structured continuation decisions instead of a simple timer.
 
+<p align="center">
+  <a href="https://github.com/btitkin/OwlynMCP/actions/workflows/ci.yml"><img src="https://github.com/btitkin/OwlynMCP/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/btitkin/OwlynMCP/releases"><img src="https://img.shields.io/github/v/release/btitkin/OwlynMCP?include_prereleases&label=release" alt="GitHub release" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/btitkin/OwlynMCP" alt="License" /></a>
+  <img src="https://img.shields.io/badge/node-%3E%3D20-339933" alt="Node.js 20+" />
+</p>
+
 It is for developers using agentic coding tools who want long-running work sessions to remain explicit, inspectable and bounded by safety rules.
+
+AI agents often stop too early. You ask an agent to work until 06:00, it finishes the first task in 20 minutes, then says "done." Owlyn exists to make the continuation decision explicit.
 
 ## Preview
 
@@ -76,20 +85,40 @@ More host setup notes are in [docs/HOST_SETUP.md](./docs/HOST_SETUP.md).
 
 ## Roadmap
 
-- Optional JSON/Markdown export.
-- Optional session templates.
-- Host-specific config helpers.
-- Optional UI dashboard.
-- Per-project session profiles.
-- Optional pause/resume and session budget controls.
+See [docs/ROADMAP.md](./docs/ROADMAP.md) for the release path from alpha to v1.0.
+
+Future ideas after v1.0 include optional JSON/Markdown export, optional session templates, host-specific config helpers, per-project session profiles, and optional pause/resume controls.
 
 These items are not implemented in the current alpha release.
 
 ## Status
 
-Alpha: the repository identifies version `v0.1.0-alpha.1`, includes tests, documentation and a manual MCP smoke test, and has been documented for local MCP host use. Broader host compatibility should still be treated as pending unless verified in the target host.
+Alpha: the repository identifies version `v0.1.0-alpha.1`, includes tests, documentation and a manual MCP smoke test, and has been validated in Codex MCP host on Windows. Broader host compatibility should still be treated as pending unless verified in the target host.
+
+## More Docs
+
+- [FAQ](./docs/FAQ.md)
+- [Host setup](./docs/HOST_SETUP.md)
+- [Real host validation](./docs/REAL_HOST_VALIDATION.md)
+- [npm publishing preparation](./docs/NPM_PUBLISHING.md)
+- [Roadmap](./docs/ROADMAP.md)
+- [Tool reference](./docs/TOOLS.md)
+- [Agent instructions](./docs/AGENT_INSTRUCTIONS.md)
+- [Social post draft](./docs/SOCIAL_POST.md)
+
+## Development
+
+```bash
+npm install
+npm run typecheck
+npm run build
+npm test
+npm run smoke:mcp
+npm run check
+```
+
+Release checklist: [RELEASE_CHECKLIST.md](./RELEASE_CHECKLIST.md).
 
 ## License
 
 MIT. See [LICENSE](./LICENSE).
-
