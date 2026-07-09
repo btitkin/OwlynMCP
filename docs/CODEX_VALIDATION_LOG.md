@@ -33,8 +33,8 @@ Known remaining Codex validation work:
 - test focused mode
 - test marathon mode
 - test stale/active session behavior
-- test after Codex restart/reload
-- test with persistent `OWLYN_DB_PATH`
+- test after Codex restart/reload - passed 2026-07-09
+- test with persistent `OWLYN_DB_PATH` - passed 2026-07-09
 - test with clean temporary `OWLYN_DB_PATH`
 
 ## Extended Validation: 2026-07-09 13:18-13:19 Europe/Warsaw
@@ -80,11 +80,39 @@ Scenario results:
 | H. Deadline reached | Passed | `owl_20260709_131857_ea72b6` | Past ISO deadline produced `deadline_reached: true` and `should_continue: false`. |
 | I. Plan next task ranking | Passed | `owl_20260709_131909_043150` | Recommended `Validate release checklist commands`; rejected approval-required high-risk tasks. |
 | J. Report and end | Passed with caveat | `owl_20260709_131909_043150` | `owlyn_report` and `owlyn_end` returned structured data. Report was sparse because the latest active session had no checkpoints. |
-| K. Restart/reload behavior | Pending | n/a | Pending manual restart/reload validation. The running Codex MCP host was not restarted. |
-| L. Persistent vs clean `OWLYN_DB_PATH` | Pending | n/a | Pending manual database-path validation. The active host config was not changed. |
+| K. Restart/reload behavior | Passed | `owl_20260709_172519_69cd94` | After Codex restart/reload, all 8 Owlyn tools were visible, `owlyn_list_sessions` worked, and a new validation session was started, checkpointed, evaluated with `owlyn_should_continue`, and ended. |
+| L. Persistent vs clean `OWLYN_DB_PATH` | Passed for persistent configured DB path | `owl_20260709_172519_69cd94` | Previous Owlyn sessions remained visible after restart/reload. `owlyn_list_sessions` returned 7 sessions, including the latest validation session. Clean temporary DB path validation remains optional/pending unless separately tested. |
 
 Errors:
 None during the executed scenarios.
 
 Final conclusion:
-Extended Codex MCP host validation passed for tool visibility, session start/checkpoint/continue flow, approval gate, destructive gate, high-risk gate, focused mode, marathon mode, deadline reached behavior, task ranking, report, and end. Restart/reload behavior and persistent-vs-clean database-path behavior remain pending manual validation.
+Extended Codex MCP host validation passed for tool visibility, session start/checkpoint/continue flow, approval gate, destructive gate, high-risk gate, focused mode, marathon mode, deadline reached behavior, task ranking, report, end, restart/reload behavior, and persistent configured `OWLYN_DB_PATH` behavior. Clean temporary database-path validation remains optional/pending unless separately tested.
+
+## Final Codex Restart and Persistence Validation: 2026-07-09 17:25 Europe/Warsaw
+
+Host:
+Codex MCP host
+
+OS:
+Windows
+
+Result:
+Passed
+
+Validated:
+
+- all 8 Owlyn tools remained visible after Codex restart/reload
+- `owlyn_list_sessions` returned persisted prior sessions
+- latest validation session `owl_20260709_172519_69cd94` was present after restart/reload
+- configured persistent `OWLYN_DB_PATH` behavior passed
+
+Observed session count:
+7 sessions were visible during persistence validation.
+
+Scenario results:
+
+| Scenario | Result | Notes |
+| -------- | ------ | ----- |
+| K. Restart/reload behavior | Passed | Owlyn MCP remained available after Codex restart/reload. |
+| L. Persistent vs clean `OWLYN_DB_PATH` | Passed for persistent configured DB path | Sessions persisted after restart/reload. Clean temporary DB path validation remains optional/pending unless separately tested. |

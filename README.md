@@ -99,14 +99,14 @@ Alpha: the current public release is `v0.1.0-alpha.2`, includes tests, documenta
 
 Owlyn MCP is currently validated in Codex MCP host on Windows.
 
-Extended Codex validation scenarios passed for continuation decisions, safety gates, focused mode, marathon mode, deadline handling, task ranking, report, and end behavior. Restart/reload and database-path checks remain pending.
+Extended Codex validation scenarios passed for continuation decisions, safety gates, focused mode, marathon mode, deadline handling, task ranking, report, end, restart/reload behavior, and persistent configured `OWLYN_DB_PATH` behavior. Clean temporary DB path validation remains optional/pending unless separately tested.
 
 The next focus is deeper Codex workflow validation:
 
 - long-running work sessions
 - continuation decisions
 - checkpoint quality
-- restart/reload behavior
+- clean temporary database-path validation
 - safe next-task planning
 
 Other MCP hosts remain pending.
