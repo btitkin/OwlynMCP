@@ -23,7 +23,7 @@ Confirm that a real MCP host can:
 
 | Host | OS | Version | Config | Tools visible | structuredContent | Session flow | Status | Notes |
 | ---- | -- | ------- | ------ | ------------- | ----------------- | ------------ | ------ | ----- |
-| Codex MCP host | Windows | v0.1.0-alpha.1 or later | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Passed | Session `owl_20260707_211907_ba3ddd` completed successfully. `owlyn_should_continue` returned `should_continue: true` and included the required continuation phrase. |
+| Codex MCP host | Windows | v0.1.0-alpha.1 or later | STDIO, `node dist/index.js`, `OWLYN_DB_PATH` host-validation.sqlite | Passed, all 8 tools visible | Passed | Passed | Passed | Basic validation passed in session `owl_20260707_211907_ba3ddd`. Extended Codex scenario matrix passed for continuation, approval, destructive, high-risk, focused, marathon, deadline, ranking, report, and end behavior. Restart/reload and database-path validation remain pending. |
 | Cursor | Windows | Future target | Pending validation | Pending | Pending | Pending | Pending | Future compatibility target. Use [CURSOR_VALIDATION.md](./CURSOR_VALIDATION.md) when this becomes a priority. |
 | Claude Desktop | Windows | Future target | Pending validation | Pending | Pending | Pending | Pending | Future compatibility target. Use [CLAUDE_DESKTOP_VALIDATION.md](./CLAUDE_DESKTOP_VALIDATION.md) when this becomes a priority. |
 | Generic stdio MCP client | Pending | Pending | Pending validation | Pending | Pending | Pending | Pending | SDK stdio tests pass, but a separate real generic host has not been recorded. |
