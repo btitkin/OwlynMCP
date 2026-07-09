@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.1.0-alpha.3
+
+### Added
+
+- Codex-first validation documentation updates.
+- Final Codex restart/reload validation results.
+- Persistent `OWLYN_DB_PATH` validation results.
+
+### Validation
+
+- Extended Codex MCP host validation passed on Windows.
+- All 8 Owlyn tools were visible.
+- structuredContent worked.
+- Continuation behavior passed.
+- Approval, destructive, and high-risk safety gates passed.
+- Focused, night_shift, and marathon mode behavior passed.
+- Deadline-reached behavior passed.
+- Task ranking passed.
+- Report/end flow passed.
+- Restart/reload behavior passed.
+- Persistent configured database path behavior passed.
+
+### Runtime
+
+- No runtime behavior changes.
+
 ## v0.1.0-alpha.2
 
 ### Added
