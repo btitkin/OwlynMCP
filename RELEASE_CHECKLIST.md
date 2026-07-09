@@ -8,6 +8,7 @@ npm run typecheck
 npm run build
 npm test
 npm pack --dry-run
+npm run validate:pack
 npm run smoke:mcp
 ```
 
@@ -28,6 +29,19 @@ Expected result:
 ```
 
 If `OWLYN_DB_PATH` is not set, the smoke test uses a temporary SQLite database and removes it after the run.
+
+## Package install validation
+
+Before publishing to npm or documenting npm install as generally available:
+
+- run `npm pack --dry-run`
+- run `npm run validate:pack`
+- optionally install the packed tarball in a separate temporary directory
+- verify the installed package contains `dist/index.js`, `README.md`, `LICENSE`, `CHANGELOG.md`, and `Owlyn.png`
+- verify the installed package exposes the `owlyn-mcp` bin entry
+- test a Codex MCP config that points to the packed install path
+
+See `docs/PACKAGE_INSTALL_VALIDATION.md` for detailed commands.
 
 ## Create alpha tag
 

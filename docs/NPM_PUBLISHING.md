@@ -30,6 +30,7 @@ Run:
 ```bash
 npm run check
 npm pack --dry-run
+npm run validate:pack
 ```
 
 Review the `npm notice Tarball Contents` output. The package should include:
@@ -52,6 +53,21 @@ It should not include:
 - temporary validation databases
 - unpublished secrets or credentials
 - unrelated project files
+
+## Required Pre-Publish Checklist
+
+Before publishing, complete all of these checks:
+
+- run `npm run check`
+- run `npm pack --dry-run`
+- run `npm run validate:pack`
+- inspect package contents from `npm pack --dry-run`
+- install the packed tarball in a temporary directory
+- verify the MCP server starts from the packed install
+- verify Codex can see all 8 tools when pointed at the packed install path
+- publish only after explicit release-owner approval
+
+See [PACKAGE_INSTALL_VALIDATION.md](./PACKAGE_INSTALL_VALIDATION.md) for the full packed-package validation flow.
 
 ## Publish
 
